@@ -16,18 +16,17 @@ def create_list_from_users_db():
     return list_from_users_db
 
 # tasks db functions
-def save_task(message, chat_id, message_id):
-    new_task = taskTracker()
+def save_task_to_DB(text, chat_ids, message_ids, status):
+    new_tsk = taskTracker(text=text, status=status, users_id=chat_ids, messages_id=message_ids)
+    new_tsk.save()
 
-def create_list_to_save_in_tasks(list_of_users):
-    return json.dumps(list_of_users)
+def create_list_to_save_in_tasks(list_id):
+    return json.dumps(list_id)
 
 def get_list_from_tasks():
     pass
 
-def create_task_DB(text, ):
-    new_tsk = taskTracker(text=text, status="open")
-    new_tsk.save()
+
 
 def create_text_for_tsk():
     pass

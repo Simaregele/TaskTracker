@@ -18,16 +18,14 @@ def get_task(message):
     bot.send_message(message.chat.id, "Вас понял! Таск добавлен!")
     # print(message.chat.id)
     list_of_users = db_functions.create_list_from_users_db()
+    messages_id = []
     for i in list_of_users:
         msg = bot.send_message(i, message.text + " " + str(message.id), reply_markup=gen_markup())
         msg_id = msg.message_id
         time.sleep(0.05)
+        messages_id.append(msg_id)
+    db_functions.save_task_to_DB(text=message, chat_ids=list_of_users, message_ids=messages_id, status="open")
 
-
-
-
-def get_last_message_id(message):
-    last_message_id = message.id
 
 
 def gen_markup():
