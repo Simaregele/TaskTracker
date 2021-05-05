@@ -21,6 +21,7 @@ def get_task(message):
     for i in list_of_users:
         msg = bot.send_message(i, message.text + " " + str(message.id), reply_markup=gen_markup())
         msg_id = msg.message_id
+        time.sleep(0.05)
 
 
 
