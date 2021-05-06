@@ -1,5 +1,5 @@
 from peewee import *
-from peewee_db_model import taskTracker, User
+from peewee_db_model import TaskTracker, User, Messages
 import json
 
 # users db functions
@@ -16,17 +16,29 @@ def create_list_from_users_db():
     return list_from_users_db
 
 # tasks db functions
-def save_task_to_DB(text, chat_ids, message_ids, status):
-    new_tsk = taskTracker(text=text, status=status, users_id=chat_ids, messages_id=message_ids)
+def save_task_to_DB_and_return_its_id(text, status, date):
+    # Сохраняет в базу и возвращает id сохраненной записис
+    new_tsk = TaskTracker(text=text, status=status, date=date)
     new_tsk.save()
+    return new_tsk.id
 
-def create_list_to_save_in_tasks(list_id):
-    return json.dumps(list_id)
+def create_ids_records_for_task(task_id, chat_id, message_id):
+    Messages(task_id=task_id, chat_id=chat_id, message_id=message_id).save()
+
+def return_messages_and_chats_ids(task_id):
+    # возвращает все записи с данными по id
+    return Messages.select().where(Messages.task_id==task_id)
+
+def return_task_id(chat_id, message_id):
+    ids = Messages.select().where(Messages.chat_id==chat_id, Messages.message_id==message_id)
+    for i in ids:
+        return i.task_id
+
+def edit_task_status(task_id, status):
+    TaskTracker.update(status=status).where(TaskTracker.id==task_id).execute()
 
 def get_list_from_tasks():
     pass
-
-
 
 def create_text_for_tsk():
     pass

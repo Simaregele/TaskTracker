@@ -8,12 +8,17 @@ class BaseModel(Model):
         database = sqlite_db
 
 
-class taskTracker(BaseModel):
+class TaskTracker(BaseModel):
     id = IntegerField(primary_key=True)
     text = TextField()
     status = TextField()
-    users_id = TextField()
-    messages_id = TextField()
+    date = TextField()
+
+class Messages(BaseModel):
+    id = IntegerField(primary_key=True)
+    task_id = TextField()
+    chat_id = TextField()
+    message_id = TextField()
 
 class User(BaseModel):
     id = IntegerField(primary_key=True)
