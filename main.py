@@ -12,7 +12,7 @@ def start_command(message):
     db_functions.save_user(message.chat.id)
 
 
-@bot.message_handler(func=lambda message: message.text.startswith("задача"))
+@bot.message_handler(func=lambda message: message.text.startswith('задача'))
 def get_task(message):
     task_id = db_functions.save_task_to_DB_and_return_its_id(text=message.text, status="open", date=message.date)
     bot.send_message(message.chat.id, "Вас понял! Таск добавлен!")
@@ -28,7 +28,6 @@ def gen_markup():
     markup.add(InlineKeyboardButton("Сделано", callback_data="cb_done"),
                                InlineKeyboardButton("Удалить", callback_data="cb_del"))
     return markup
-
 
 # тут у нас функции которые изменяют существующий таск
 @bot.callback_query_handler(func=lambda call: True)
